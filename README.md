@@ -8,23 +8,10 @@ A wrapper to use AqBanking CLI from a PHP context
 Installation
 ------------
 
-Install the library using [composer][1]. Add the following to your `composer.json`:
+Install the library using [composer][1]:
 
-```json
-{
-    "require": {
-        "juit/aqbanking-php": "dev-master"
-    },
-    "minimum-stability": "dev"
-}
-```
-
-Now run the `install` command.
-
-```sh
-$ composer.phar install
-```
-
+    composer require mestrona/aqbanking-php
+    
 [1]: http://getcomposer.org/
 
 Credits

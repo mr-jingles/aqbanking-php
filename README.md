@@ -24,3 +24,8 @@ More Info
 ---------
 
 * [How to setup AqBanking on a shared hosting](https://serverfault.com/questions/942701/how-to-install-a-binary-package-on-a-shared-hosting-for-example-aqbanking-or-m)
+
+Dev Docs
+--------
+
+* [Setup PIN Tan Account in AqBanking (German)](https://www.aquamaniac.de/rdm/projects/aqbanking/wiki/SetupPinTan)

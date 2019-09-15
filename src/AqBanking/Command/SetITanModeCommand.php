@@ -2,40 +2,32 @@
 
 namespace AqBanking\Command;
 
+use AqBanking\Command\AddUserCommand\UserAlreadyExistsException;
 use AqBanking\Command\ShellCommandExecutor\DefectiveResultException;
 use AqBanking\Command\ShellCommandExecutor\ResultAnalyzer;
-use AqBanking\PinFile\PinFileInterface as PinFile;
 use AqBanking\ExistingUser;
+use AqBanking\User;
 
-class GetSysIDCommand extends AbstractCommand
+class SetITanModeCommand extends AbstractCommand
 {
     /**
      * @param User $user
-     * @param PinFile $pinFile
+     * @throws AddUserCommand\UserAlreadyExistsException
      * @throws ShellCommandExecutor\DefectiveResultException
      */
-    public function execute(ExistingUser $user, PinFile $pinFile)
+    public function execute(ExistingUser $user, $mode)
     {
         $shellCommand =
             $this->pathToAqHBCIToolBinary
-            . ' --pinfile=' . escapeshellcmd($pinFile->getPath())
-            . ' --noninteractive'
-            . ' --acceptvalidcerts'
-            . ' getsysid'
+            . ' setitanmode'
             . ' --user=' . $user->getUniqueUserId()
-        ;
+            . ' -m ' . escapeshellcmd($mode);
 
         $result = $this->getShellCommandExecutor()->execute($shellCommand);
 
         $resultAnalyzer = new ResultAnalyzer();
         if ($resultAnalyzer->isDefectiveResult($result)) {
-            throw new DefectiveResultException(
-                'Unexpected output on getting user\'s accounts',
-                0,
-                null,
-                $result,
-                $shellCommand
-            );
+            throw new DefectiveResultException('Unexpected output on setting user itan mode', 0, null, $result, $shellCommand);
         }
     }
 }

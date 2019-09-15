@@ -15,7 +15,10 @@ class ResultAnalyzer
         '/Executing Jobs: Started\./',
         '/A TLS packet with unexpected length was received\./',
         '/Bad IBAN \(country code not in upper case\)/',       
+        '/Adding flags/',
         '/===== Executing Jobs =====/',
+        '/===== Getting Certificate =====/',
+        '/ .*/', // everything starting with a space belongs to a previous message and is not an error (hopefully)
     );
 
     /**

@@ -2,40 +2,34 @@
 
 namespace AqBanking\Command;
 
+use AqBanking\Command\AddUserCommand\UserAlreadyExistsException;
 use AqBanking\Command\ShellCommandExecutor\DefectiveResultException;
 use AqBanking\Command\ShellCommandExecutor\ResultAnalyzer;
-use AqBanking\PinFile\PinFileInterface as PinFile;
 use AqBanking\ExistingUser;
+use AqBanking\User;
 
-class GetSysIDCommand extends AbstractCommand
+class AddUserFlagsCommand extends AbstractCommand
 {
+    const FLAG_SSL_QUIRK_IGNORE_PREMATURE_CLOSE = 'tlsIgnPrematureClose';
+
     /**
      * @param User $user
-     * @param PinFile $pinFile
+     * @throws AddUserCommand\UserAlreadyExistsException
      * @throws ShellCommandExecutor\DefectiveResultException
      */
-    public function execute(ExistingUser $user, PinFile $pinFile)
+    public function execute(ExistingUser $user, $flags)
     {
         $shellCommand =
             $this->pathToAqHBCIToolBinary
-            . ' --pinfile=' . escapeshellcmd($pinFile->getPath())
-            . ' --noninteractive'
-            . ' --acceptvalidcerts'
-            . ' getsysid'
+            . ' adduserflags'
             . ' --user=' . $user->getUniqueUserId()
-        ;
+            . ' --flags=' . escapeshellcmd($flags);
 
         $result = $this->getShellCommandExecutor()->execute($shellCommand);
 
         $resultAnalyzer = new ResultAnalyzer();
         if ($resultAnalyzer->isDefectiveResult($result)) {
-            throw new DefectiveResultException(
-                'Unexpected output on getting user\'s accounts',
-                0,
-                null,
-                $result,
-                $shellCommand
-            );
+            throw new DefectiveResultException('Unexpected output on setting user flags', 0, null, $result, $shellCommand);
         }
     }
 }

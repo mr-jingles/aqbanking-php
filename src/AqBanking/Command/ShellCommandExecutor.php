@@ -8,7 +8,7 @@ class ShellCommandExecutor
 {
     public function execute($shellCommand)
     {
-        $shellCommand = "LANG=C " . $shellCommand;
+        $shellCommand = "AQBANKING_LOGLEVEL=error GWEN_LOGLEVEL=error AQHBCI_LOGLEVEL=error LANG=C " . $shellCommand;
         $output = array();
         $returnVar = null;
         $tempFile = tempnam(sys_get_temp_dir(), 'aqb-');

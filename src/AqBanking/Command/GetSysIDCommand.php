@@ -18,7 +18,7 @@ class GetSysIDCommand extends AbstractCommand
     {
         $shellCommand =
             $this->pathToAqHBCIToolBinary
-            . ' --pinfile=' . escapeshellcmd($pinFile->getPath())
+            . ' --pinfile=' . escapeshellarg($pinFile->getPath())
             . ' --noninteractive'
             . ' --acceptvalidcerts'
             . ' getsysid'

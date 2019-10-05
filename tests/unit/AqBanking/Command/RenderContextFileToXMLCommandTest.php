@@ -14,7 +14,7 @@ class RenderContextFileToXMLCommandTest extends \PHPUnit_Framework_TestCase
         $shellCommandExecutorMock = \Mockery::mock('AqBanking\Command\ShellCommandExecutor');
         $expectedCommand =
             'aqbanking-cli'
-            . ' listtrans'
+            . ' export'
             . ' --ctxfile=' . $contextFile->getPath()
             . ' --exporter=xmldb';
         $output = array(

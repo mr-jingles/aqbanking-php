@@ -16,7 +16,10 @@ class DefectiveResultException extends \Exception
 
     public function __construct($message = '', $code = 0, \Exception $previous = null, Result $result = null, $shellCommand = '')
     {
-        parent::__construct($message . " - Result: " . var_export($result, true) , $code, $previous);
+        parent::__construct($message .
+            " - Command: " . $shellCommand .
+            " - Errors: " . implode(PHP_EOL, $result->getErrors()),
+            $code, $previous);
 
         $this->result = $result;
         $this->shellCommand = $shellCommand;

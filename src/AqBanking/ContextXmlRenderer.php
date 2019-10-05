@@ -114,31 +114,10 @@ class ContextXmlRenderer
      */
     private function renderDateElement(\DOMNode $node)
     {
-        $utcFlagElement = $this->xPath->query('inUtc', $node)->item(0);
-        if ('1' !== trim($utcFlagElement->nodeValue)) {
-            throw new \RuntimeException('Unexpected input');
-        }
-
-        $dayElement = $this->xPath->query('date/day/value', $node)->item(0);
-        $monthElement = $this->xPath->query('date/month/value', $node)->item(0);
-        $yearElement = $this->xPath->query('date/year/value', $node)->item(0);
-
-        $hourElement = $this->xPath->query('time/hour/value', $node)->item(0);
-        $minuteElement = $this->xPath->query('time/min/value', $node)->item(0);
-        $secondElement = $this->xPath->query('time/sec/value', $node)->item(0);
-
-        $date = new \DateTime('today', new \DateTimeZone('UTC'));
-        $date->setDate(
-            (int)$yearElement->nodeValue,
-            (int)$monthElement->nodeValue,
-            (int)$dayElement->nodeValue
-        );
-        $date->setTime(
-            (int)$hourElement->nodeValue,
-            (int)$minuteElement->nodeValue,
-            (int)$secondElement->nodeValue
-        );
-
+        $dateElement = $this->xPath->query('value', $node)->item(0);
+        $date = \DateTime::createFromFormat('Ymd', $dateElement->nodeValue,
+            new \DateTimeZone('UTC'));
+        $date->setTime(0,0,0);
         return $date;
     }
 
@@ -149,9 +128,8 @@ class ContextXmlRenderer
      */
     private function renderMoneyElement(\DOMNode $node)
     {
-        $valueString = $this->renderSimpleTextElement($this->xPath->query('value/value', $node));
-        $currencyString = $this->renderSimpleTextElement($this->xPath->query('currency/value', $node));
-
+        $value = $this->renderSimpleTextElement($this->xPath->query('value', $node));
+        list($valueString, $currencyString) = explode(':', $value);
         return $this->moneyElementRenderer->render($valueString, $currencyString);
     }
 

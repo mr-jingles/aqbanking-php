@@ -41,7 +41,7 @@ class Transaction
         Account $remoteAccount,
         $purpose,
         \DateTime $valutaDate,
-        \DateTime $date = null,
+        \DateTime $date,
         Money $value
     )
     {

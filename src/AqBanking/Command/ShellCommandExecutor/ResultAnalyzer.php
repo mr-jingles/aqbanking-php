@@ -26,6 +26,8 @@ class ResultAnalyzer
         '/Writing account spec/',
         '/===== Executing Jobs =====/',
         '/===== Getting Certificate =====/',
+        '/Handling user/',
+        '/RXH-encrypting message/',
         '/^  .*$/', // everything starting with a space belongs to a previous message and is not an error (hopefully)
     );
 

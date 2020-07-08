@@ -107,7 +107,7 @@ class Transaction implements Arrayable
             'localAccount' => $this->getLocalAccount()->toArray(),
             'purpose' => $this->getPurpose(),
             'remoteAccount' => $this->getRemoteAccount()->toArray(),
-            'value' => $this->getValue()->value,
+            'value' => $this->getValue()->getAmount(),
             'valutaDate' => $this->getValutaDate()->format('Y-m-d H:i:s')
         ];
     }

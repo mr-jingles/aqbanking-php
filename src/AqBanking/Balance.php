@@ -4,7 +4,7 @@ namespace AqBanking;
 
 use Money\Money;
 
-class Balance
+class Balance implements Arrayable
 {
     /**
      * @var string
@@ -53,5 +53,14 @@ class Balance
     public function getValue()
     {
         return $this->value;
+    }
+
+    public function toArray()
+    {
+        return [
+            'type' => $this->getType(),
+            'value' => $this->getValue()->value,
+            'date' => $this->getDate()->format('Y-m-d H:i:s')
+        ];
     }
 }

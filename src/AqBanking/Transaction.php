@@ -4,7 +4,7 @@ namespace AqBanking;
 
 use Money\Money;
 
-class Transaction
+class Transaction implements Arrayable
 {
     /**
      * @var Account
@@ -43,8 +43,7 @@ class Transaction
         \DateTime $valutaDate,
         \DateTime $date,
         Money $value
-    )
-    {
+    ) {
         $this->date = $date;
         $this->localAccount = $localAccount;
         $this->purpose = $purpose;
@@ -99,5 +98,17 @@ class Transaction
     public function getValutaDate()
     {
         return $this->valutaDate;
+    }
+
+    public function toArray()
+    {
+        return [
+            'date' => $this->getDate()->format('Y-m-d H:i:s'),
+            'localAccount' => $this->getLocalAccount()->toArray(),
+            'purpose' => $this->getPurpose(),
+            'remoteAccount' => $this->getRemoteAccount()->toArray(),
+            'value' => $this->getValue()->value,
+            'valutaDate' => $this->getValutaDate()->format('Y-m-d H:i:s')
+        ];
     }
 }

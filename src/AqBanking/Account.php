@@ -2,7 +2,7 @@
 
 namespace AqBanking;
 
-class Account implements AccountInterface
+class Account implements AccountInterface, Arrayable
 {
     /**
      * @var BankCode
@@ -54,5 +54,14 @@ class Account implements AccountInterface
     public function getAccountHolderName()
     {
         return $this->accountHolderName;
+    }
+
+    public function toArray()
+    {
+        return [
+            'bankCode' => $this->getBankCode()->getString(),
+            'accountHolderName' => $this->getAccountHolderName(),
+            'accountNumber' => $this->getAccountNumber()
+        ];
     }
 }

@@ -46,6 +46,11 @@ class Transaction implements Arrayable
      */
     private $customerReference;
 
+    /**
+     * @var string
+     */
+    private $type;
+
     public function __construct(
         Account $localAccount,
         Account $remoteAccount,
@@ -54,7 +59,8 @@ class Transaction implements Arrayable
         \DateTime $date,
         Money $value,
         $primaNota,
-        $customerReference
+        $customerReference,
+        $type
     ) {
         $this->date = $date;
         $this->localAccount = $localAccount;
@@ -64,6 +70,7 @@ class Transaction implements Arrayable
         $this->valutaDate = $valutaDate;
         $this->primaNota = $primaNota;
         $this->customerReference = $customerReference;
+        $this->type = $type;
     }
 
     /**
@@ -130,6 +137,14 @@ class Transaction implements Arrayable
         return $this->customerReference;
     }
 
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
     public function toArray()
     {
         return [
@@ -144,7 +159,8 @@ class Transaction implements Arrayable
             ],
             'valutaDate' => $this->getValutaDate()->format('Y-m-d'),
             'primaNota' => $this->getPrimaNota(),
-            'customerReference' => $this->getCustomerReference()
+            'customerReference' => $this->getCustomerReference(),
+            'type' => $this->getType(),
         ];
     }
 }

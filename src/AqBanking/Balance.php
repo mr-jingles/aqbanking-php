@@ -38,7 +38,7 @@ class Balance implements Arrayable
     {
         return $this->date;
     }
-    
+
     /**
      * @return string
      */
@@ -59,8 +59,12 @@ class Balance implements Arrayable
     {
         return [
             'type' => $this->getType(),
-            'value' => $this->getValue()->getAmount(),
-            'date' => $this->getDate()->format('Y-m-d H:i:s')
+            'value' => [
+                'amount' => $this->getValue()->getAmount(),
+                'priceUnit' => 100,
+                'currency' => $this->getValue()->getCurrency()->getName()
+            ],
+            'date' => $this->getDate()->format('Y-m-d')
         ];
     }
 }

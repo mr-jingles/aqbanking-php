@@ -133,12 +133,16 @@ class Transaction implements Arrayable
     public function toArray()
     {
         return [
-            'date' => $this->getDate()->format('Y-m-d H:i:s'),
+            'date' => $this->getDate()->format('Y-m-d'),
             'localAccount' => $this->getLocalAccount()->toArray(),
             'purpose' => $this->getPurpose(),
             'remoteAccount' => $this->getRemoteAccount()->toArray(),
-            'value' => $this->getValue()->getAmount(),
-            'valutaDate' => $this->getValutaDate()->format('Y-m-d H:i:s'),
+            'value' => [
+                'amount' => $this->getValue()->getAmount(),
+                'currency' => $this->getValue()->getCurrency()->getName(),
+                'priceUnit' => 100
+            ],
+            'valutaDate' => $this->getValutaDate()->format('Y-m-d'),
             'primaNota' => $this->getPrimaNota(),
             'customerReference' => $this->getCustomerReference()
         ];

@@ -62,13 +62,23 @@ class ContextXmlRenderer
 
             $value = $this->renderMoneyElement($this->xPath->query('value', $transactionNode)->item(0));
 
+            $primaNota = $this->renderMultiLineElement(
+                $this->xPath->query('primanota/value', $transactionNode)
+            );
+
+            $customerRef = $this->renderMultiLineElement(
+                $this->xPath->query('customerReference/value', $transactionNode)
+            );
+
             $transactions[] = new Transaction(
                 new Account(new BankCode($localBankCode), $localAccountNumber, $localName),
                 new Account(new BankCode($remoteBankCode), $remoteAccountNumber, $remoteName),
                 $purpose,
                 $valutaDate,
                 $date,
-                $value
+                $value,
+                $primaNota,
+                $customerRef
             );
         }
 

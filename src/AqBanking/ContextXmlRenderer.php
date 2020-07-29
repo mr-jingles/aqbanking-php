@@ -74,7 +74,6 @@ class ContextXmlRenderer
                 $this->xPath->query('type/value', $transactionNode)
             );
 
-
             $transactions[] = new Transaction(
                 new Account(new BankCode($localBankCode), $localAccountNumber, $localName),
                 new Account(new BankCode($remoteBankCode), $remoteAccountNumber, $remoteName),
@@ -158,7 +157,13 @@ class ContextXmlRenderer
     private function renderMoneyElement(\DOMNode $node)
     {
         $value = $this->renderSimpleTextElement($this->xPath->query('value', $node));
-        list($valueString, $currencyString) = explode(':', $value);
+
+        $arr = explode(':', $value);
+
+        $valueString = $arr[0];
+        //defaulting to EUR if no currency is passed
+        $currencyString = array_key_exists(1, $arr) ? $arr[1] : 'EUR';
+
         return $this->moneyElementRenderer->render($valueString, $currencyString);
     }
 
